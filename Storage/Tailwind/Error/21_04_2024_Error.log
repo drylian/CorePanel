@@ -1,0 +1,12 @@
+[ 21/04/2024-00:16:53 ] [ _.Tailwind._ ] Erro ao executar o comando: Command failed: tailwindcss -i ./app/Assets/css/main.css -o ./app/Assets/css/tailwind.css --watch
+Specified input file ./app/Assets/css/main.css does not exist.
+
+[ 21/04/2024-00:16:54 ] [ _.Tailwind._ ] Erro ao executar o comando: Command failed: tailwindcss -i ./app/Assets/css/main.css -o ./app/Assets/css/tailwind.css
+Specified input file ./app/Assets/css/main.css does not exist.
+
+[ 21/04/2024-00:17:47 ] [ _.Tailwind._ ] Erro ao executar o comando: Command failed: tailwindcss -i ./app/Assets/css/main.css -o ./app/Assets/css/tailwind.css
+Specified input file ./app/Assets/css/main.css does not exist.
+
+[ 21/04/2024-00:17:47 ] [ _.Tailwind._ ] Erro ao executar o comando: Command failed: tailwindcss -i ./app/Assets/css/main.css -o ./app/Assets/css/tailwind.css --watch
+Specified input file ./app/Assets/css/main.css does not exist.
+

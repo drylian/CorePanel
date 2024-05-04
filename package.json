@@ -1,0 +1,76 @@
+{
+  "name": "corepanel",
+  "version": "1.0.1",
+  "description": "Core dashboard.",
+  "main": "./temp/Initialization.js",
+  "scripts": {
+    "dev": "ts-node-dev --ignore-watch app/Storage --respawn --transpile-only -r tsconfig-paths/register app/Initialization.ts",
+    "preview": "ts-node --transpile-only -r tsconfig-paths/register app/Client.ts",
+    "build": "ts-node --transpile-only -r tsconfig-paths/register app/Builder.ts --mode Custom --archs x64"
+  },
+  "author": "Drylian",
+  "module": "CommonJS",
+  "license": "ARR",
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@yao-pkg/pkg": "^5.11.5",
+    "@types/cookie-parser": "^1.4.7",
+    "@types/crypto-js": "^4.2.2",
+    "@types/express": "^4.17.21",
+    "@types/lodash": "^4.17.0",
+    "@types/morgan": "^1.9.9",
+    "@types/node": "^20.11.27",
+    "@types/uuid": "^9.0.8",
+    "esbuild": "^0.20.2",
+    "esbuild-node-externals": "^1.13.0",
+    "fs-extra": "^11.2.0",
+    "javascript-obfuscator": "^4.1.0",
+    "node-resourcehacker": "^1.2.1",
+    "os": "^0.1.2",
+    "sucrase": "^3.35.0",
+    "ts-node-dev": "^2.0.0",
+    "tsc-alias": "^1.8.8",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.4.2"
+  },
+  "dependencies": {
+    "autoprefixer": "^10.4.19",
+    "axios": "^1.6.8",
+    "bcrypt": "^5.1.1",
+    "boxicons": "^2.1.4",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "cron-parser": "^4.9.0",
+    "crypto-js": "^4.2.0",
+    "dotenv": "^16.4.5",
+    "eta": "^3.4.0",
+    "express": "^4.19.2",
+    "glob": "^10.3.10",
+    "lodash": "^4.17.21",
+    "loggings": "^1.0.1",
+    "morgan": "^1.10.0",
+    "mysql2": "^3.9.3",
+    "postcss": "^8.4.38",
+    "reflect-metadata": "^0.2.2",
+    "sqlite3": "^5.1.7",
+    "tailwindcss": "^3.4.3",
+    "typeorm": "^0.3.20",
+    "uuid": "^9.0.1"
+  },
+  "bin": "build/service.js",
+  "pkg": {
+    "scripts": [
+      "**/*.js",
+      "**/*.json",
+      "package.json"
+    ],
+    "assets": [
+      "locals/**/*",
+      "Assets/**/*",
+      "node_modules/**/*.js",
+      "node_modules/**/*.cjs",
+      "node_modules/**/*.json",
+      "node_modules/**/*.node"
+    ]
+  }
+}

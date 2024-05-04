@@ -1,0 +1,9 @@
+[ 30/04/2024-00:13:32 ] [ _.Views._ ] ReferenceError: GetPermission is not defined
+    at Eta.eval (eval at compile (C:\Users\Drylian\Documents\GitHub\CorePanel\node_modules\eta\src\compile.ts:29:12), <anonymous>:19:28)
+    at Eta.renderAsync (C:\Users\Drylian\Documents\GitHub\CorePanel\node_modules\eta\src\render.ts:82:26)
+    at includeAsync (eval at compile (C:\Users\Drylian\Documents\GitHub\CorePanel\node_modules\eta\src\compile.ts:29:12), <anonymous>:5:45)
+    at Eta.eval (eval at compile (C:\Users\Drylian\Documents\GitHub\CorePanel\node_modules\eta\src\compile.ts:29:12), <anonymous>:26:18)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at Eta.eval (eval at compile (C:\Users\Drylian\Documents\GitHub\CorePanel\node_modules\eta\src\compile.ts:29:12), <anonymous>:29:12)
+    at Eta.eval (eval at compile (C:\Users\Drylian\Documents\GitHub\CorePanel\node_modules\eta\src\compile.ts:29:12), <anonymous>:25:12)
+    at Etalization.send (C:\Users\Drylian\Documents\GitHub\CorePanel\app\Classes\Etalization.ts:127:26)

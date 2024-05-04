@@ -1,0 +1,28 @@
+<%
+const gen = () => {
+	const num = 32;
+	const crt = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz123456789";
+	let rst = "";
+	for (let i = 0; i < num; i++) {
+		const ind = Math.floor(Math.random() * crt.length);
+		rst += crt.charAt(ind);
+	}
+	return rst;
+};
+const id = gen();
+const ds = gen();
+
+%>
+
+<div class="box bg-gray-200 dark:bg-gray-800" id="<%= id %>" onclick="SubtitleBox('<%= id %>','<%= ds %>', '<%= it.option %>')">
+  <div class="flex items-center justify-between">
+    <div class="flex items-center">
+      <%= it.icon ? `<i class="${it.icon} mt-1 duration-300 text-gray-700 dark:text-gray-500" style="font-size: 20px; margin-top: -3px;"></i>` : "" %>
+      <p class="ml-2 font-bold text-lg text-gray-900 duration-300 dark:text-gray-200"><%= it.title %></p>
+      <span class='ml-2 text-sm text-gray-600 duration-300 dark:text-gray-400'>
+        <p><%~ it.desc %></p>
+      </span>
+    </div>
+    <%~ it.option === "true" ? `<p>${it.i18n.t("Http.Options")} <i id="${ds}" class="bx bxs-chevron-down duration-300 text-gray-700 dark:text-gray-500" style="font-size: 20px; margin-top: -3px;"></i></p>` : "" %>
+  </div>
+  <div class="box-content">
