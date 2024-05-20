@@ -16,7 +16,7 @@ interface OptionsTypes {
 }
 interface Routertype {
     path: string;
-    children: string;
+    children: any;
     permission?: number;
 };
 const ETA_INDEX = pathe.join(ResourcesPATH, "Views", "Index.eta")
@@ -28,7 +28,7 @@ const eta = new Eta({ views: pathe.dirname(ETA_INDEX) })
  * @param routes routes of Router
  * @returns 
  */
-function Router(url: InstanceType<typeof URL>, Routes: Routertype[]) {
+export function Router(url: InstanceType<typeof URL>, Routes: Routertype[]) {
     const path = url.pathname;
     if (!path) return null;
     const result = [];

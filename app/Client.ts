@@ -81,10 +81,10 @@ ClientStart().then(async (server: Application) => {
         core.log("[Platforms].bold:" + `[${Package.core_configs.platforms.join(", ")}].blue`);
         core.log("[Archs].bold:" + `[${Package.core_configs.archs.join(", ")}].blue`);
         core.log("[Node Version].bold:" + `[${Package.core_configs.nodeVersion}].blue`);
-        core.log("[Obfuscate].bold:" + Package.core_configs.obfuscate ? "[Yes].green": "[No].red");
-        core.log("[Application].bold:" + Package.core_configs.pkgbuild ? "[Yes].green": "[No].red");
-        core.log("[Bundler].bold:" + Package.core_configs.bundler ? "[Yes].green": "[No].red");
-        core.log("[Date].bold:" + new Date(Package.core_configs.date));
+        core.log("[Obfuscate].bold:" + (Package.core_configs.obfuscate ? "[Yes].green": "[No].red"));
+        core.log("[Application].bold:" + (Package.core_configs.pkgbuild ? "[Yes].green": "[No].red"));
+        core.log("[Bundler].bold:" + (Package.core_configs.bundler ? "[Yes].green": "[No].red"));
+        core.log("[Date].bold:" + (new Date(Package.core_configs.date)));
     }
     core.log("----------------------------------------------------------------")
     core.log("                         [Estatisticas].lime-b                    ")

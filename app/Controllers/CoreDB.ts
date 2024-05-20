@@ -11,12 +11,8 @@ export class CoreDB {
     }
     public preset() {
         CoreDB.connection = new DataSource({
-            type: (Global['db_dialect']).get as any,
-            host: Global['db_host'].get,
-            password: Global['db_pass'].get,
-            port: Global['db_port'].get,
-            username: Global['db_user'].get,
-            database: Global['db_database'].get,
+            type: "sqlite",
+            database: "./exemplo.sqlite",
             synchronize: true,
             logger: new LoggingsTypeORM(),
             entities: CoreDB.entities as any

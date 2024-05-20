@@ -1,9 +1,0 @@
-<div class="border-t-2 rounded-t border-<%= it.border %>-500">
-  <div class="header bg-<%= it.bg %>-400 dark:bg-<%= it.bg %>-800 flex items-center rounded-t-md p-1">
-    <div class="flex items-center">
-      <i class="fas fa-icon mt-1 text-<%= it.text %>-600 dark:text-<%= it.text %>-300" style="font-size: 20px; margin-top: -3px;"></i>
-      <p class="ml-2 font-bold text-lg text-<%= it.text %>-600 dark:text-<%= it.text %>-300"><%= it.title %></p>
-      <span class="hidden md:block ml-2 text-sm text-<%= it.text %>-700 dark:text-<%= it.text %>-400"><%= it.desc %></span>
-    </div>
-  </div>
-  <div class="overflow-auto shadow-md rounded-b-md bg-<%= it.bg %>-300 dark:bg-<%= it.bg %>-900">

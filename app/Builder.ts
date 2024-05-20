@@ -130,7 +130,6 @@ class Builder {
      * Clear Rest Trash of builds
      */
     public async clean(trashs: string[] = ["temp", this.options.outdir, `${this.options.directory}/Structurales.ts`]) {
-        core.log("Cleaning rest trash")
         for (const folder of trashs) {
             if (await fs.access(folder).then(() => true).catch(() => false)) {
                 core.log(`Deleting [${folder}].red-b ...`);
@@ -211,16 +210,30 @@ class Builder {
         await fs.writeFile("temp/package.json", JSON.stringify(package_production, null, 0), 'utf-8');
 
     }
+    /**
+     * Optimize Node_Modules
+     */
+    public async clearmodules(): Promise<void> {
+        const removeModules = await glob([`${this.options.outdir}/node_modules/**/*`], {
+            ignore: ['/**/*.js', '/**/*.json', '/**/*.cjs', '/**/*.node', '/**/*.yml', '/**/*.css','/boxicons/**/*']
+        })
+
+        core.log('\n\nRemoving useless files in node_modules...')
+
+        for (const file of removeModules) {
+            if ((await fs.stat(file)).isFile()) await fs.rm(file)
+        }
+    }
 
     /**
      * Makes pkg app
      */
     public async pkgbuild() {
-        const args = ['.', '--compress', 'Brotli', '--no-bytecode', '--public-packages', '"*"', '--public']
+        const args = [this.options.outdir, '--compress', 'Brotli', '--public-packages', '"*"', '--public']
         const builds: string[] = []
         const manifests: BuildManifest[] = []
-        await ajsonsv("./package.json", {
-            bin: this.options.bundler ? this.options.outdir + "/service.js" : this.options.outdir + `/src/Client.js`,
+        await ajsonsv(this.options.outdir + "/package.json", {
+            bin: this.options.bundler ? "service.js" : `src/Client.js`,
             pkg: {
                 scripts: [
                     "**/*.js",
@@ -230,6 +243,7 @@ class Builder {
                 assets: [
                     "locals/**/*",
                     "Assets/**/*",
+                    "node_modules/**/*.css",
                     "node_modules/**/*.js",
                     "node_modules/**/*.cjs",
                     "node_modules/**/*.json",
@@ -263,11 +277,11 @@ class Builder {
         for (const build of builds) {
             const startTime = Date.now()
             const nameSplit = build.split('-')
-            const buildName = this.options.outdir + `/release/${Package.name}-${nameSplit[1]}-${nameSplit[2]}${nameSplit[1] === 'win' ? '.exe' : nameSplit[1] === 'macos' ? '.app' : ''}`
+            const buildName = `./release/${Package.name}-${nameSplit[1]}-${nameSplit[2]}${nameSplit[1] === 'win' ? '.exe' : nameSplit[1] === 'macos' ? '.app' : ''}`
             const newArg: string[] = []
 
             if (dirEX(this.options.outdir + "/" + buildName)) await adirRE(this.options.outdir + "/" + buildName)
-            if (dirEX(this.options.outdir + `/release/manifest-${nameSplit[1]}.json`)) await adirRE(this.options.outdir + `/release/manifest-${nameSplit[1]}.json`)
+            if (dirEX(`./release/manifest-${nameSplit[1]}.json`)) await adirRE(this.options.outdir + `/release/manifest-${nameSplit[1]}.json`)
 
             newArg.push(...args, '-t', build, '-o', buildName)
             core.log('Starting Pkg Build...\n\n')
@@ -282,7 +296,7 @@ class Builder {
 
             manifests.push({
                 [nameSplit[1]]: {
-                    path: buildName.replace(this.options.outdir + '/release/', ''),
+                    path: buildName.replace('./release/', ''),
                     platform: nameSplit[1],
                     arch: nameSplit[2],
                     size: this.fbytes(file.byteLength),
@@ -294,12 +308,12 @@ class Builder {
             for (const manifest of manifests) {
                 for (const [key, value] of Object.entries(manifest)) {
                     const values = [value]
-                    if (dirEX(this.options.outdir + `/release/manifest-${key}.json`)) {
-                        const existContent = JSON.parse(await fs.readFile(this.options.outdir + `/release/manifest-${key}.json`, { encoding: 'utf-8' })) as BuildInfo[]
+                    if (dirEX(`./release/manifest-${key}.json`)) {
+                        const existContent = JSON.parse(await fs.readFile(`./release/manifest-${key}.json`, { encoding: 'utf-8' })) as BuildInfo[]
                         values.push(...existContent)
                         console.log(values)
                     }
-                    await fs.writeFile(this.options.outdir + `/release/manifest-${key}.json`, JSON.stringify(values, null, 4))
+                    await fs.writeFile(`./release/manifest-${key}.json`, JSON.stringify(values, null, 4))
                 }
             }
         }
@@ -329,7 +343,9 @@ class Builder {
      * Make build based in constructor informations
      */
     public async services() {
+        core.log("Cleaning rest trash")
         await this.clean();
+        await this.clean(['release']);
         await this.prepares();
         core.log("Compiling typescript");
         ChildProcess.execSync("tsc --project ./tsconfig.json && tsc-alias", { stdio: "inherit" });
@@ -351,6 +367,7 @@ class Builder {
         core.log("Npm install");
         ChildProcess.execSync(`cd ${this.options.outdir} && npm i`, { stdio: "inherit" });
         ChildProcess.execSync(`cd ..`, { stdio: "inherit" });
+        await this.clearmodules();
         if (this.options.bundler) {
             core.log("Making bundler services")
             await this.bundler();
@@ -370,7 +387,7 @@ class Builder {
  */
 async function Initials() {
     const args = BuilderARGS(process.argv)
-    console.log(args)
+    // console.log(args)
     let build: InstanceType<typeof Builder>;
     if (args?.mode && args.mode === "default") {
         core.log("Starting build progress in Default mode")
@@ -385,6 +402,7 @@ async function Initials() {
             mode: "Default",
             bundler: true,
             debug: false,
+            cross:["linux","win32"]
         })
     } else {
         build = new Builder({
@@ -398,7 +416,7 @@ async function Initials() {
             mode: "Custom",
             bundler: Boolean(args?.bundler) || true,
             debug: args?.debug ? args?.debug : false,
-            ...[args?.cross ? {cross:args?.cross}: {}]
+            ...[args?.cross ? { cross: args?.cross } : {}]
         })
         core.log(`Starting build progress in Custom mode`)
     }

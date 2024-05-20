@@ -75,7 +75,7 @@ if (it.req?.user) return it.res.status(302).redirect(callback ? String(callback)
         });
         const data = await response.json();
         if (response.ok && data.complete) {
-          window.location.href = "<%= callback ? String(callback) : "/" %>";
+          window.location.href = "<%= callback ? "/auth/login?callback=" + String(callback) : "/auth/login" %>";
         } else {
           const errorMessage = data.message || '<%= it.i18n.t("Http.UnknowErrorLogin") %>';
           document.getElementById('ErrorRef').textContent = errorMessage;
